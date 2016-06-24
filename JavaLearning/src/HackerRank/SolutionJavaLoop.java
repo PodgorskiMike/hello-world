@@ -16,7 +16,7 @@ public class SolutionJavaLoop {
 	            { 
 	             
 	            int b = scan.nextInt();
-	            int c = scan.nextInt();
+	            int c = scan.nextInt(  );
 	            int d = scan.nextInt();
 	            int prevAns = b;
 	            for(int j = 0; j < d; j++)
