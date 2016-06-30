@@ -2,6 +2,8 @@ package Slumlord;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -82,6 +84,33 @@ public class character {
 		this.SkillNum = SkillNum;
 		this.PlayerNumber = -1;
 	}
+	
+	private static void generateCsvFile(String sFileName, String round, String player, String action, String outcome)
+	   {
+
+		boolean exists = true;
+		try {
+			FileWriter writer = new FileWriter(sFileName,exists);
+			 writer.append(round);
+			 writer.append(player);
+			 writer.append(action);
+			 writer.append(outcome);
+			 writer.append('\n');
+			 
+			 writer.flush();
+			 //writer.close();
+		
+		
+		
+		
+		
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+}
 	
 	//handles the manipulation of the character object for buying a property
 	public void buy(property a)
@@ -221,7 +250,7 @@ public class character {
 		
 		//Method for all move in red
 		public dice MoveInRed(property r1, ArrayList playerChars, int playersTurn, int phase, int currentTenant, dice currentRoll, dice gameDice, JLabel diceResults, JLabel Turn, 
-				JButton btnRedpropone, tenantTokens avaliable, JLabel avaliableTenants, int round, JButton btnDrawCard, JButton btnNextPhase)
+				JButton btnRedpropone, tenantTokens avaliable, JLabel avaliableTenants, int round, JButton btnDrawCard, JButton btnNextPhase, String roundS)
 		{
 			//checks that the property is owned by the current player, that we are not in damage mode, it is not already occupied, in phase 1(move in), and that a number of dice has been selected
 			if(r1.OwnedBy.equals(((character)playerChars.get(playersTurn)).PlayerColor) && DamageVar == -1 && r1.Occupied == false && phase == 1 && numDice != 0)
@@ -255,6 +284,7 @@ public class character {
 					//check if current green dice are enough to move in tenant
 					if(currentRoll.Green >= ((character)playerChars.get(playersTurn)).LeaseNumRed)
 					{	//success add one to occupied int
+						generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Success");
 						Turn.setText("<html>You Succsfully Moved the Tenant In! You Rolled Some Red's Click on the Draw Cards Button");
 						((character)playerChars.get(playersTurn)).RedOccupied = ((character)playerChars.get(playersTurn)).RedOccupied + 1;
 						//change display depending on damage to property
@@ -321,6 +351,7 @@ public class character {
 					//if its the first roll(reroll available)
 					else if(reroll < 1)
 					{
+						generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 						//red rolls are the only ones you can reroll
 						//num dice now equals red
 						numDice = currentRoll.Red;
@@ -351,6 +382,7 @@ public class character {
 					else if(reroll >= 1)
 					{
 						//set text
+						generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 						Turn.setText("<html>Sorry the Dice Still Hate You! You Failed to Move the Tenant In Click on the Draw Card Button</html>");
 						//clear dice and rerolls
 						numDice = 0;
@@ -405,6 +437,7 @@ public class character {
 					//check if current green dice are enough to move in tenant
 					if(currentRoll.Green >= ((character)playerChars.get(playersTurn)).LeaseNumBlue + 1)
 					{
+						generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Success");
 						//success add one to occupied int
 						Turn.setText("<html>You Succsfully Moved the Tenant In! You Rolled Some Red's Click on the Draw Cards Button");
 						((character)playerChars.get(playersTurn)).BlueOccupied = ((character)playerChars.get(playersTurn)).BlueOccupied + 1;
@@ -475,6 +508,7 @@ public class character {
 					//if its the first roll(reroll available)
 					else if(reroll < 1)
 					{
+						generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 						//red rolls are the only ones you can reroll
 						//num dice now equals red
 						numDice = currentRoll.Red;
@@ -504,6 +538,7 @@ public class character {
 					}
 					else if(reroll >= 1)
 					{
+						generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 						Turn.setText("<html>Sorry the Dice Still Hate You! You Failed to Move the Tenant In. Click on the Draw Card Button</html>");
 						numDice = 0;
 						reroll = 2;
@@ -555,6 +590,7 @@ public class character {
 				//check if current green dice are enough to move in tenant
 				if(currentRoll.Green >= ((character)playerChars.get(playersTurn)).LeaseNumGreen + 3)
 				{
+					generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Success");
 					//success add one to occupied int
 					Turn.setText("<html>You Succsfully Moved the Tenant In!  You Rolled Some Red's. Click on the Draw Cards Button");
 					((character)playerChars.get(playersTurn)).GreenOccupied = ((character)playerChars.get(playersTurn)).GreenOccupied + 1;
@@ -625,6 +661,7 @@ public class character {
 				//if its the first roll(reroll available)
 				else if(reroll < 1)
 					{
+					generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 					//red rolls are the only ones you can reroll
 					//num dice now equals red
 					numDice = currentRoll.Red;
@@ -654,6 +691,7 @@ public class character {
 					}
 				else if(reroll >= 1)
 					{
+					generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 						Turn.setText("<html>Sorry the Dice Still Hate You! You Failed to Move the Tenant In. Click on the Draw Card Button</html>");
 						numDice = 0;
 						reroll = 2;
@@ -681,7 +719,7 @@ public class character {
 		
 		//Method for all move in blue
 				public dice MoveInBlue(property r1, ArrayList playerChars, int playersTurn, int phase, int currentTenant, dice currentRoll, dice gameDice, JLabel diceResults, JLabel Turn, 
-						JButton btnRedpropone, tenantTokens avaliable, JLabel avaliableTenants, int round, JButton btnDrawCard, JButton btnNextPhase)
+						JButton btnRedpropone, tenantTokens avaliable, JLabel avaliableTenants, int round, JButton btnDrawCard, JButton btnNextPhase, String roundS)
 				{
 					//checks that the property is owned by the current player, that we are not in damage mode, it is not already occupied, in phase 1(move in), and that a number of dice has been selected
 					if(r1.OwnedBy.equals(((character)playerChars.get(playersTurn)).PlayerColor) && DamageVar == -1 && r1.Occupied == false && phase == 1 && numDice != 0)
@@ -714,6 +752,7 @@ public class character {
 							//check if current green dice are enough to move in tenant
 							if(currentRoll.Green >= ((character)playerChars.get(playersTurn)).LeaseNumRed +1)
 							{
+								generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Success");
 								//success add one to occupied int
 								Turn.setText("<html>You Succsfully Moved the Tenant In! You Rolled Some Red's. Click on the Draw Cards Button");
 								((character)playerChars.get(playersTurn)).RedOccupied = ((character)playerChars.get(playersTurn)).RedOccupied + 1;
@@ -785,6 +824,7 @@ public class character {
 							//if its the first roll(reroll available)
 							else if(reroll < 1)
 							{
+								generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 								//red rolls are the only ones you can reroll
 								//num dice now equals red
 								numDice = currentRoll.Red;
@@ -814,6 +854,7 @@ public class character {
 							}
 							else if(reroll >= 1)
 							{
+								generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 								Turn.setText("<html>Sorry the Dice Still Hate You! You Failed to Move the Tenant In. Click on the Draw Card Button</html>");
 								numDice = 0;
 								reroll = 2;
@@ -864,6 +905,7 @@ public class character {
 							//check if current green dice are enough to move in tenant
 							if(currentRoll.Green >= ((character)playerChars.get(playersTurn)).LeaseNumBlue)
 							{
+								generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Success");
 								//success add one to occupied int
 								Turn.setText("<html>You Succsfully Moved the Tenant In! You Rolled Some Red's. Click on the Draw Cards Button");
 								((character)playerChars.get(playersTurn)).BlueOccupied = ((character)playerChars.get(playersTurn)).BlueOccupied;
@@ -930,6 +972,7 @@ public class character {
 							//if its the first roll(reroll available)
 							else if(reroll < 1)
 							{
+								generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 								//red rolls are the only ones you can reroll
 								//num dice now equals red
 								numDice = currentRoll.Red;
@@ -959,6 +1002,7 @@ public class character {
 							}
 							else if(reroll >= 1)
 							{
+								generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 								Turn.setText("<html>Sorry the Dice Still Hate You! You Failed to Move the Tenant In. Click on the Draw Card Button</html>");
 								numDice = 0;
 								reroll = 2;
@@ -1010,6 +1054,7 @@ public class character {
 						//check if current green dice are enough to move in tenant
 						if(currentRoll.Green >= ((character)playerChars.get(playersTurn)).LeaseNumGreen + 1)
 						{
+							generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Success");
 							//success add one to occupied int
 							Turn.setText("<html>You Succsfully Moved the Tenant In! You Rolled Some Red's. Click on the Draw Cards Button");
 							((character)playerChars.get(playersTurn)).GreenOccupied = ((character)playerChars.get(playersTurn)).GreenOccupied + 1;
@@ -1080,6 +1125,7 @@ public class character {
 						//if its the first roll(reroll available)
 						else if(reroll < 1)
 							{
+							generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 							//red rolls are the only ones you can reroll
 							//num dice now equals red
 							numDice = currentRoll.Red;
@@ -1109,6 +1155,7 @@ public class character {
 							}
 						else if(reroll >= 1)
 							{
+							generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 								Turn.setText("<html>Sorry the Dice Still Hate You! You Failed to Move the Tenant In. Click on the Draw Card Button</html>");
 								numDice = 0;
 								reroll = 2;
@@ -1136,7 +1183,7 @@ public class character {
 				
 				//Method for all move in green building
 				public dice MoveInGreen(property r1, ArrayList playerChars, int playersTurn, int phase, int currentTenant, dice currentRoll, dice gameDice, JLabel diceResults, JLabel Turn, 
-						JButton btnRedpropone, tenantTokens avaliable, JLabel avaliableTenants, int round, JButton btnDrawCard, JButton btnNextPhase)
+						JButton btnRedpropone, tenantTokens avaliable, JLabel avaliableTenants, int round, JButton btnDrawCard, JButton btnNextPhase, String roundS)
 				{
 					//checks that the property is owned by the current player, that we are not in damage mode, it is not already occupied, in phase 1(move in), and that a number of dice has been selected
 					if(r1.OwnedBy.equals(((character)playerChars.get(playersTurn)).PlayerColor) && DamageVar == -1 && r1.Occupied == false && phase == 1 && numDice != 0)
@@ -1169,6 +1216,7 @@ public class character {
 							//check if current green dice are enough to move in tenant
 							if(currentRoll.Green >= ((character)playerChars.get(playersTurn)).LeaseNumRed +3)
 							{
+								generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Success");
 								//success add one to occupied int
 								Turn.setText("<html>You Succsfully Moved the Tenant In! You Rolled Some Red's. Click on the Draw Cards Button");
 								((character)playerChars.get(playersTurn)).RedOccupied = ((character)playerChars.get(playersTurn)).RedOccupied + 1;
@@ -1240,6 +1288,7 @@ public class character {
 							//if its the first roll(reroll available)
 							else if(reroll < 1)
 							{
+								generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 								//red rolls are the only ones you can reroll
 								//num dice now equals red
 								numDice = currentRoll.Red;
@@ -1269,6 +1318,7 @@ public class character {
 							}
 							else if(reroll >= 1)
 							{
+								generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 								Turn.setText("<html>Sorry the Dice Still Hate You! You Failed to Move the Tenant In. Click on the Draw Card Button</html>");
 								numDice = 0;
 								reroll = 2;
@@ -1319,6 +1369,7 @@ public class character {
 							//check if current green dice are enough to move in tenant
 							if(currentRoll.Green >= ((character)playerChars.get(playersTurn)).LeaseNumBlue + 1)
 							{
+								generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Success");
 								//success add one to occupied int
 								Turn.setText("<html>You Succsfully Moved the Tenant In! You Rolled Some Red's. Click on the Draw Cards Button");
 								((character)playerChars.get(playersTurn)).BlueOccupied = ((character)playerChars.get(playersTurn)).BlueOccupied + 1;
@@ -1389,6 +1440,7 @@ public class character {
 							//if its the first roll(reroll available)
 							else if(reroll < 1)
 							{
+								generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 								//red rolls are the only ones you can reroll
 								//num dice now equals red
 								numDice = currentRoll.Red;
@@ -1418,6 +1470,7 @@ public class character {
 							}
 							else if(reroll >= 1)
 							{
+								generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 								Turn.setText("<html>Sorry the Dice Still Hate You! You Failed to Move the Tenant In. Click on the Draw Card Button</html>");
 								numDice = 0;
 								reroll = 2;
@@ -1469,6 +1522,7 @@ public class character {
 						//check if current green dice are enough to move in tenant
 						if(currentRoll.Green >= ((character)playerChars.get(playersTurn)).LeaseNumGreen)
 						{
+							generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Success");
 							//success add one to occupied int
 							Turn.setText("<html>You Succsfully Moved the Tenant In! You Rolled Some Red's. Click on the Draw Cards Button");
 							((character)playerChars.get(playersTurn)).GreenOccupied = ((character)playerChars.get(playersTurn)).GreenOccupied + 1;
@@ -1535,6 +1589,7 @@ public class character {
 						//if its the first roll(reroll available)
 						else if(reroll < 1)
 							{
+							generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 							//red rolls are the only ones you can reroll
 							//num dice now equals red
 							numDice = currentRoll.Red;
@@ -1564,6 +1619,7 @@ public class character {
 							}
 						else if(reroll >= 1)
 							{
+							generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Rolled To Move In",",Fail");
 								Turn.setText("<html>Sorry the Dice Still Hate You! You Failed to Move the Tenant In. Click on the Draw Card Button</html>");
 								numDice = 0;
 								reroll = 2;
@@ -1593,7 +1649,7 @@ public class character {
 		
 		//method for adding damage to property
 		public void AddDamage(property r1, ArrayList playerChars, int playersTurn, int phase, JLabel characterCard, JButton btnRedpropone, dice currentRoll, JLabel diceResults, JLabel Turn, 
-				JButton btnTakeBank, JButton btnDrawCard, JButton btnNextPhase)
+				JButton btnTakeBank, JButton btnDrawCard, JButton btnNextPhase, String roundS)
 		{
 			//checks that property is owned by player and repair card has been drawn or that it is phase 11(damage others)
 		if(r1.OwnedBy.equals(((character)playerChars.get(playersTurn)).PlayerColor) && DamageVar != -1 && phase == 2 || phase == 11)
@@ -1603,6 +1659,7 @@ public class character {
 				//if damage is under three
 				if(r1.Damage < 3)
 				{
+					generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Damaged Property","");
 					//remove red dice/card
 					if(currentRoll.Red > 0)
 					{
@@ -1771,7 +1828,7 @@ public class character {
 		}
 		
 		//Method for upgrading
-		public void Upgrading(property r1,JButton btnRedpropone, ArrayList playerChars, int playersTurn, int phase, JLabel Turn, JLabel characterCard){
+		public void Upgrading(property r1,JButton btnRedpropone, ArrayList playerChars, int playersTurn, int phase, JLabel Turn, JLabel characterCard, String roundS){
 			//checks that player owns the property and the game is in phase 5
 		if(r1.OwnedBy.equals(((character)playerChars.get(playersTurn)).PlayerColor) && phase == 5)
 		{
@@ -1790,6 +1847,7 @@ public class character {
 					//subtracts the money
 					((character) playerChars.get(playersTurn)).Bank = ((character) playerChars.get(playersTurn)).Bank - 250;
 					//marks the upgrade on the property
+					generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Upgrade","");
 					r1.Upgrades = r1.Upgrades + 1;
 					Turn.setText("Upgraded");
 				}
@@ -1800,6 +1858,7 @@ public class character {
 				//subtracts the money
 				((character) playerChars.get(playersTurn)).Bank = ((character) playerChars.get(playersTurn)).Bank - 500;
 				//marks the upgrade on the property
+				generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Upgrade","");
 				r1.Upgrades = r1.Upgrades + 1;
 				Turn.setText("Upgraded");
 			}
@@ -1963,7 +2022,7 @@ public class character {
 			}
 		}
 		//method for repairing
-		public void Repairing(property r1, JButton btnRedpropone, ArrayList playerChars, int playersTurn, int phase, JLabel Turn, JLabel characterCard ){
+		public void Repairing(property r1, JButton btnRedpropone, ArrayList playerChars, int playersTurn, int phase, JLabel Turn, JLabel characterCard, String roundS){
 			//checks to be sure player owns building, it is phase 4(repair) and there is damage to be repaired
 			if(r1.OwnedBy.equals(((character)playerChars.get(playersTurn)).PlayerColor) && phase == 4 && r1.Damage < 3  && r1.Damage > 0)
 			{
@@ -1979,6 +2038,7 @@ public class character {
 					//checks for enough money
 					if( ((character) playerChars.get(playersTurn)).Bank >= 100)
 					{
+						generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Repaired","");
 						//removes the damage and the money from bank
 						((character) playerChars.get(playersTurn)).Bank = ((character) playerChars.get(playersTurn)).Bank - 100;
 						r1.Damage = r1.Damage - 1;
@@ -1988,6 +2048,7 @@ public class character {
 				//checks for enough money
 				else if( ((character) playerChars.get(playersTurn)).Bank >= 200)
 				{
+					generateCsvFile("C:\\Users\\salty\\Desktop\\Game.csv", roundS + "," ,(((character)playerChars.get(playersTurn)).Name), ",Repaired","");
 					//removes the damage and the money from bank
 					((character) playerChars.get(playersTurn)).Bank = ((character) playerChars.get(playersTurn)).Bank - 200;
 					r1.Damage = r1.Damage - 1;
