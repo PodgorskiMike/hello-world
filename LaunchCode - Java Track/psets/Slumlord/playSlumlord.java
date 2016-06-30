@@ -598,7 +598,7 @@ public class playSlumlord {
 				try{
 					//System.out.println("Got this far");
 					//Get connection to DB
-					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/slumlord?&useSSL=false", "Mike" , "Sillygoose1!");
+					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/slumlord?&useSSL=false", "Mike" , "********");
 					
 					//2. create statement
 					Statement myStmt = myConn.createStatement();
@@ -4131,7 +4131,7 @@ public class playSlumlord {
 						try{
 							//System.out.println("Got this far");
 							//Get connection to DB
-							Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/slumlord?&useSSL=false", "Mike" , "Sillygoose1!");
+							Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/slumlord?&useSSL=false", "Mike" , "*******");
 							
 							//2. create statement
 							Statement myStmt = myConn.createStatement();
