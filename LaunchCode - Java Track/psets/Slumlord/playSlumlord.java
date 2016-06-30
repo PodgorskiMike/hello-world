@@ -4205,7 +4205,7 @@ public class playSlumlord {
 									+"<td>" + p.Hscore + "</td>"
 									+"<td>" + p.Tscore + "</td>"
 									+"</tr>"
-									+"<tr>"
+									+"<tr>" 
 									+"<td>"+ q.name +"</td>"
 									+"<td>" + q.totG + "</td>"
 									+"<td>" + q.wins + "</td>"
