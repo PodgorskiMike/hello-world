@@ -8,7 +8,7 @@ public class Driver {
 		
 		try{
 			//Get connection to DB
-			Connection myConn =  DriverManager.getConnection("jdbc:mysql://localhost:3306/demo", "Mike" , "Sillygoose1!");
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo", "Mike" , "Sillygoose1!");
 			
 			//2. create statement
 			Statement myStmt = myConn.createStatement();
